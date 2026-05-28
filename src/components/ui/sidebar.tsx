@@ -7,18 +7,15 @@ import { Badge } from "@/components/ui/badge";
 import {
   Blocks,
   ChevronsUpDown,
-  FileClock,
-  GraduationCap,
-  Layout,
+  FilePen,
   LayoutDashboard,
   LogOut,
-  MessageSquareText,
-  MessagesSquare,
+  FolderUp,
   Plus,
-  Settings,
+  ChartScatter,
   UserCircle,
   UserCog,
-  UserSearch,
+  Database
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
@@ -45,10 +42,10 @@ type MenuItem = {
 
 const MENU_ITEMS: MenuItem[] = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { title: "Upload Dataset", href: "/datasets", icon: FileClock, separatorAbove: true },
-  { title: "Case Base", href: "/case-bases", icon: Blocks },
-  { title: "Evaluasi Model (K)", href: "/evaluations", icon: GraduationCap },
-  { title: "Antrean Diagnosis", href: "/diagnoses", icon: MessagesSquare, badge: "VALIDASI", separatorAbove: true },
+  { title: "Upload Dataset", href: "/datasets", icon: FolderUp, separatorAbove: true },
+  { title: "Case Base", href: "/case-bases", icon: Database },
+  { title: "Evaluasi Model (K)", href: "/evaluations", icon: ChartScatter },
+  { title: "Validasi Diagnosis", href: "/diagnoses", icon: FilePen, badge: "VALIDASI", separatorAbove: true },
 ];
 
 const sidebarVariants = {
