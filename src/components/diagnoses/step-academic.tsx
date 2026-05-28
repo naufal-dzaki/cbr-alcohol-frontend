@@ -52,7 +52,6 @@ export function StepAcademic({ formData, updateFormData }: StepAcademicProps) {
           <Input
             type="number"
             min="0"
-            max="75"
             placeholder="Contoh: 4"
             value={formData.absences}
             onChange={(e) => updateFormData("absences", e.target.value)}
