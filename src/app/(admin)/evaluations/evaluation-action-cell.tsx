@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { EvaluationData } from "./columns";
+import { EvaluationScenario } from "./columns";
 
-export function EvaluationActionCell({ evaluation }: { evaluation: EvaluationData }) {
+export function EvaluationActionCell({ evaluation }: { evaluation: EvaluationScenario }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -15,7 +15,7 @@ export function EvaluationActionCell({ evaluation }: { evaluation: EvaluationDat
     setIsLoading(true);
     const token = Cookies.get("access_token");
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/evaluations/${evaluation.id}/active`, {
+      const res = await fetch(`http://127.0.0.1:8000/api/evaluations/${evaluation.evaluation_id}/active`, {
         method: "PATCH",
         headers: { Authorization: `Bearer ${token}` }
       });

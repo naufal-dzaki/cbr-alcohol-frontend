@@ -1,9 +1,9 @@
 import { cookies } from "next/headers";
-import { DataTable } from "@/components/ui/data-table/data-table";
-import { columns, EvaluationData } from "./columns";
+import { GroupedEvaluation } from "./columns"; // Pastikan tipe data diekspor dari file yang benar
 import { EvaluationHeader } from "./evaluation-header";
+import { EvaluationTable } from "./evaluation-table"; // Import komponen baru
 
-async function getEvaluations(): Promise<EvaluationData[]> {
+async function getEvaluations(): Promise<GroupedEvaluation[]> {
   const cookieStore = await cookies();
   const token = cookieStore.get("access_token")?.value;
 
@@ -27,20 +27,9 @@ export default async function EvaluationsPage() {
   return (
     <div className="space-y-6">
       <EvaluationHeader />
-
-      <div className="bg-white rounded-md p-4 shadow-sm border">
-        {data.length === 0 ? (
-          <div className="text-center py-10 text-muted-foreground">
-            Belum ada data evaluasi. Silakan klik tombol "Jalankan Evaluasi Ulang" di atas.
-          </div>
-        ) : (
-          <DataTable 
-            columns={columns} 
-            data={data} 
-            globalSearchPlaceholder="Cari berdasarkan nilai K atau rasio..."
-          />
-        )}
-      </div>
+      
+      <EvaluationTable data={data} />
+      
     </div>
   );
 }
