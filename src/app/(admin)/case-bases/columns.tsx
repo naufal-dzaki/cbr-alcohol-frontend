@@ -22,6 +22,26 @@ export type CaseBaseData = {
   created_at: string;
 };
 
+const mapStudyTime = (val: number) => {
+  const map: Record<number, string> = { 1: "< 2 Jam", 2: "2 - 5 Jam", 3: "5 - 10 Jam", 4: "> 10 Jam" };
+  return map[val] || val;
+};
+
+const mapFamRel = (val: number) => {
+  const map: Record<number, string> = { 1: "1 - Sangat Buruk", 2: "2 - Buruk", 3: "3 - Cukup", 4: "4 - Baik", 5: "5 - Sangat Baik" };
+  return map[val] || val;
+};
+
+const mapFreeTime = (val: number) => {
+  const map: Record<number, string> = { 1: "1 - Sng. Sedikit", 2: "2 - Sedikit", 3: "3 - Sedang", 4: "4 - Banyak", 5: "5 - Sng. Banyak" };
+  return map[val] || val;
+};
+
+const mapGoOut = (val: number) => {
+  const map: Record<number, string> = { 1: "1 - Sng. Jarang", 2: "2 - Jarang", 3: "3 - Kadang", 4: "4 - Sering", 5: "5 - Sng. Sering" };
+  return map[val] || val;
+};
+
 export const columns: ColumnDef<CaseBaseData>[] = [
   {
     accessorKey: "id",
@@ -29,27 +49,51 @@ export const columns: ColumnDef<CaseBaseData>[] = [
     cell: ({ row }) => <span className="font-mono text-xs text-muted-foreground">#{row.original.id}</span>,
   },
   {
-    id: "features",
-    header: "Fitur Kategorikal",
+    id: "demografi",
+    header: "Demografi",
     cell: ({ row }) => {
       const data = row.original;
+      const sexLabel = data.sex === 1 ? "L" : "P";
+      const addrLabel = data.address === 1 ? "Urban" : "Rural";
+      const pstatusLabel = data.pstatus === 1 ? "T" : "A";
+      
       return (
-        <div className="flex gap-1 text-xs text-muted-foreground">
-          <Badge variant="outline">Sex: {data.sex === 1 ? 'M' : 'F'}</Badge>
-          <Badge variant="outline">Addr: {data.address === 1 ? 'U' : 'R'}</Badge>
+        <div className="flex flex-col gap-1 text-[11px]">
+          <span>Sex: <span className="font-medium">{sexLabel}</span></span>
+          <span>Addr: <span className="font-medium">{addrLabel}</span></span>
+          <span>PStatus: <span className="font-medium">{pstatusLabel}</span></span>
         </div>
       );
     },
   },
   {
-    accessorKey: "absences",
-    header: "Absences",
-    cell: ({ row }) => <span className="text-sm">{row.original.absences.toFixed(2)}</span>,
+    id: "akademik",
+    header: "Akademik",
+    cell: ({ row }) => {
+      const data = row.original;
+      return (
+        <div className="flex flex-col gap-1 text-[11px]">
+          <span>Study: <span className="font-medium">{mapStudyTime(data.studytime)}</span></span>
+          <span>Failures: <span className="font-medium">{data.failures}x</span></span>
+          <span>Absences: <span className="font-medium">{data.absences} Hari</span></span>
+        </div>
+      );
+    },
   },
   {
-    accessorKey: "ground_truth_score",
-    header: "GT Score",
-    cell: ({ row }) => <span className="font-medium">{row.original.ground_truth_score.toFixed(2)}</span>,
+    id: "sosial",
+    header: "Sosial & Waktu Luang",
+    cell: ({ row }) => {
+      const data = row.original;
+      return (
+        <div className="flex flex-col gap-1 text-[11px] min-w-[140px]">
+          <span className="truncate">FamRel: <span className="font-medium">{mapFamRel(data.famrel)}</span></span>
+          <span className="truncate">FreeTime: <span className="font-medium">{mapFreeTime(data.freetime)}</span></span>
+          <span className="truncate">GoOut: <span className="font-medium">{mapGoOut(data.goout)}</span></span>
+          <span>Romantic: <span className="font-medium">{data.romantic === 1 ? "Ya" : "Tidak"}</span></span>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "label",
