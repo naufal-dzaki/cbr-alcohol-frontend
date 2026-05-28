@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
-import { GroupedEvaluation } from "./columns"; // Pastikan tipe data diekspor dari file yang benar
+import { GroupedEvaluation } from "./columns"; 
 import { EvaluationHeader } from "./evaluation-header";
-import { EvaluationTable } from "./evaluation-table"; // Import komponen baru
+import { EvaluationContainer } from "./evaluation-container"; 
 
 async function getEvaluations(): Promise<GroupedEvaluation[]> {
   const cookieStore = await cookies();
@@ -28,8 +28,13 @@ export default async function EvaluationsPage() {
     <div className="space-y-6">
       <EvaluationHeader />
       
-      <EvaluationTable data={data} />
-      
+      {data.length === 0 ? (
+        <div className="bg-white rounded-md p-4 shadow-sm border text-center py-10 text-muted-foreground">
+          Belum ada data evaluasi. Silakan klik tombol "Jalankan Evaluasi Ulang" di atas.
+        </div>
+      ) : (
+        <EvaluationContainer data={data} />
+      )}
     </div>
   );
 }
